@@ -39,8 +39,8 @@ class ColorDetection:
             return 'white'
 
         # should be black
-        # elif v < 70:
-            # return 'colour'
+        elif v < 70:
+            return 'black'
 
         elif h < 10 or h > 155 and h < 170:
             return 'red'
@@ -55,7 +55,7 @@ class ColorDetection:
         elif h > 110 and h < 130:
             return 'blue'
         else:
-            return 'white'
+            return 'purple'
 
     def name_to_rgb(self, name):
         """
@@ -70,7 +70,9 @@ class ColorDetection:
             'blue'   : (255,0,0),
             'green'  : (0,255,0),
             'white'  : (255,255,255),
-            'yellow' : (0,255,255)
+            'yellow' : (0,255,255),
+            'black'  : (0,0,0),
+            'purple' : (128,0,128)
         }
         return color[name]
 

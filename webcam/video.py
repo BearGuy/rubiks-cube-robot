@@ -76,7 +76,9 @@ class Webcam:
             'blue'   : 'B',
             'red'    : 'R',
             'orange' : 'L',
-            'yellow' : 'D'
+            'yellow' : 'D',
+            'black'  : 'X',
+            'purple' : 'P'
         }
         return notation[color]
 
@@ -101,6 +103,7 @@ class Webcam:
                    0,0,0]
         while True:
             _, frame = self.cam.read()
+            frame = cv2.flip(frame,0)
             hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
             key = cv2.waitKey(10) & 0xff
 
