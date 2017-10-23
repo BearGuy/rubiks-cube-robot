@@ -26,20 +26,16 @@ def MB_rot(degrees,direct): #dir input should be 1 for CW, 0 for CCW, entres deg
   GPIO.output(MB_dir_pin,direct) # set direction for motor to drive, 1 = CW
 
   steps=(degrees/1.8)
-  MB_step = 0
     
   steps = int(steps)
   for i in range(steps):
-    if MB_step == 0: 
-      GPIO.output(MB_step_pin,1)
-      MB_step=1
-    else:
-      MB_step=0
-      GPIO.output(MB_step_pin,0)
+    GPIO.output(MB_step_pin,1)
+    sleep(0.001)
+    GPIO.output(MB_step_pin,0)
+    sleep(0.001)
     print("step {}".format(i))
-    sleep(0.1)
 
-MB_rot(36000,1)
+MB_rot(360,1)
 
 
 GPIO.cleanup()                 # resets all GPIO ports used by this program  
