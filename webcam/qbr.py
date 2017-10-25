@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# Filename      : qbr.py
-# Author        : Kim K
-# Created       : Tue, 26 Jan 2016
-# Last Modified : Sun, 31 Jan 2016
-
-
 import sys
 import kociemba
 import argparse
@@ -54,6 +46,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # run Qbr with its arguments.
-    Qbr(
-        args.normalize,
-    ).run()
+    Qbr(args.normalize).run()
