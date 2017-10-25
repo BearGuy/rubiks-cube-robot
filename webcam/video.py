@@ -95,7 +95,7 @@ class Webcam:
                    0,0,0]
         while True:
             _, frame = self.cam.read()
-            frame = cv2.flip(frame,0)
+            #frame = cv2.flip(frame,0)
             hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
             key = cv2.waitKey(10) & 0xff
 

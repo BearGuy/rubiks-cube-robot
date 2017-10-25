@@ -27,24 +27,25 @@ class ColorDetection:
         # green = 60
         # blue = 120
 
-        if s < 110:
+        if s < 80:
             return 'white'
 
-        # should be black
-        elif v < 70:
+        elif v < 50:
             return 'black'
 
-        elif h < 10 or h > 155 and h < 170:
+        elif h < 3:
             return 'red'
-        elif h > 10 and h < 20:
+        #elif h > 155 and h < 170:
+        #    return 'red'
+        elif h >= 3 and h < 15:
             return 'orange'
-        elif h > 170 and h < 180:
-            return 'orange'
-        elif h > 20 and h < 55:
+        #elif h > 170 and h < 180:
+        #    return 'orange'
+        elif h > 25 and h < 45:
             return 'yellow'
-        elif h > 55 and h < 90:
+        elif h > 55 and h < 80:
             return 'green'
-        elif h > 110 and h < 130:
+        elif h > 90 and h < 130:
             return 'blue'
         else:
             return 'purple'
