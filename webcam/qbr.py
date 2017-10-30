@@ -8,8 +8,8 @@ from normalizer import normalize
 
 class Qbr:
 
-    def __init__(self, normalize):
-        self.humanize = normalize
+    def __init__(self, humanize):
+        self.humanize = humanize
 
     def run(self):
         state         = webcam.scan()
@@ -41,10 +41,10 @@ class Qbr:
 if __name__ == '__main__':
     # define argument parser.
     parser = argparse.ArgumentParser()
-    parser.add_argument('-n', '--normalize', default=False, action='store_true',
-            help='Shows the solution normalized. For example "R2" would be: \
+    parser.add_argument('-n', '--humanize', default=False, action='store_true',
+            help='Shows the solution humanized. For example "R2" would be: \
                     "Turn the right side 180 degrees".')
     args = parser.parse_args()
 
     # run Qbr with its arguments.
-    Qbr(args.normalize).run()
+    Qbr(args.humanize).run()

@@ -10,9 +10,6 @@ class ColorDetection:
         (h,s,v) = hsv
         print((h,s,v))
 
-        # blue_lower = np.array([110,50,50])
-        # blue_upper = np.array([130,255,255])
-
         # h values (theoretical)
         # red = 0
         # orange = 15
@@ -21,11 +18,11 @@ class ColorDetection:
         # blue = 120
 
         # h values (in lab)
-        # red = 150-165
-        # orange = 165-175
-        # yellow = 30
-        # green = 60
-        # blue = 120
+        # red =
+        # orange =
+        # yellow =
+        # green =
+        # blue =
 
         if s < 80:
             return 'white'
@@ -35,12 +32,8 @@ class ColorDetection:
 
         elif h < 3:
             return 'red'
-        #elif h > 155 and h < 170:
-        #    return 'red'
         elif h >= 3 and h < 15:
             return 'orange'
-        #elif h > 170 and h < 180:
-        #    return 'orange'
         elif h > 25 and h < 45:
             return 'yellow'
         elif h > 55 and h < 80:
