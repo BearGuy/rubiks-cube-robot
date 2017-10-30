@@ -51,5 +51,6 @@ class Motor:
 
     """Resets the claw attached to the motor"""
     def reset(self):
-        if self.degrees % 180 == 90:
-            self.rotate(90, 0)
+        self.degrees = self.degrees % 360
+        self.rotate(self.degrees, 0) # rotate backwards to starting position
+        self.degrees = 0
