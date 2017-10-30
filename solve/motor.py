@@ -35,10 +35,14 @@ class Motor:
         self.degrees = 0
 
     """Rotates a side of the cube given the degrees and direction inputted"""
-    def rotate(self, degrees, direct):
+    def rotate(self, degrees):
+        if degrees >= 0:
+            direct = 1
+        else:
+            direct = 0
         GPIO.output(self.dir_pin, direct) # set direction for motor to drive, 1 = CW
 
-        steps = int(degrees/1.8)
+        steps = int(abs(degrees)/1.8)
 
         for i in range(steps):
             GPIO.output(self.step_pin, 1)
@@ -50,7 +54,11 @@ class Motor:
         self.degrees += degrees
 
     """Resets the claw attached to the motor"""
-    def reset(self):
-        self.degrees = self.degrees % 360
-        self.rotate(self.degrees, 0) # rotate backwards to starting position
-        self.degrees = 0
+    # def reset(self):
+        # self.degrees = self.degrees % 360
+        # self.rotate(-self.degrees) # rotate backwards to starting position
+        # self.degrees = 0
+
+class Linear:
+    def __init__(self):
+        return
