@@ -26,8 +26,8 @@ class Motor:
     """Create Motor Object"""
     def __init__(self, role, step_pin, dir_pin):
         GPIO.setmode(GPIO.BOARD)             # choose BCM or BOARD
-        GPIO.setup(3, GPIO.OUT)           # set GPIO24 as an output
-        GPIO.setup(5, GPIO.OUT)           # set GPIO23 as an output
+        GPIO.setup(dir_pin, GPIO.OUT)
+        GPIO.setup(step_pin, GPIO.OUT)
 
         self.role = role
         self.step_pin = step_pin
