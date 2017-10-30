@@ -47,7 +47,7 @@ class Motor:
             sleep(0.001)
             print("step {}".format(i))
 
-        self.degrees = degrees
+        self.degrees += degrees
 
     """Resets the claw attached to the motor"""
     def reset(self):
