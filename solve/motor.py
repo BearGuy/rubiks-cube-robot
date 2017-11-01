@@ -3,15 +3,14 @@ import RPi.GPIO as GPIO
 
 class Stepper:
     """Create Stepper Object"""
-    def __init__(self, role, step_pin, dir_pin):
+    def __init__(self, step_pin, dir_pin):
         GPIO.setmode(GPIO.BOARD)  # choose BCM or BOARD
         GPIO.setup(dir_pin, GPIO.OUT)
         GPIO.setup(step_pin, GPIO.OUT)
 
-        self.role = role
         self.step_pin = step_pin
         self.dir_pin = dir_pin
-        self.degrees = 0
+        # self.degrees = 0
 
     """Rotates the stepper motor given the degrees inputted"""
     def rotate(self, degrees):
@@ -29,8 +28,9 @@ class Stepper:
             GPIO.output(self.step_pin, 0)
             sleep(0.001)
             print("step {}".format(i))
+        sleep(0.1)
 
-        self.degrees += degrees
+        # self.degrees += degrees
 
     """Resets the to the motor to 0 degrees"""
     # def reset(self):
@@ -44,5 +44,5 @@ class Motor(Stepper):
         return
 
 class Linear(Stepper):
-    def new_func(self):
+    def move(self, direct):
         return
