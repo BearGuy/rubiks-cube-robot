@@ -9,14 +9,14 @@ class Solver:
     def __init__(self,algorithm):
         self.algorithm = algorithm.split() # get list of solve commands from string 
 
-        self.motor_right = Motor(8, 10)
         self.motor_left = Motor(3, 5)
-        # self.motor_front = Motor(3, 5)
+        self.motor_right = Motor(8, 10)
+        self.motor_front = Motor(11, 12)
         # self.motor_back = Motor(8, 10)
 
         self.linear_right = Linear(21, 23)
         self.linear_left = Linear(22, 24)
-        # self.linear_front = Linear(3, 5)
+        self.linear_front = Linear(29, 31)
         # self.linear_back = Linear(8, 10)
 
     def rotate_2(self, motor_1, motor_2, degrees):
@@ -84,7 +84,7 @@ class Solver:
             elif command == "D'":
                 self.run_pD()
 
-            time.sleep(1)
+            time.sleep(2)
 
         GPIO.cleanup() # resets all GPIO ports used by this program
         sys.exit(0)
@@ -352,8 +352,16 @@ class Solver:
         self.linear_left.move(1)
 
     def test_double(self):
-        self.rotate_2(self.motor_front, self.motor_back, 90) # rotate away from default orientation
+        for i in range(200):
+            self.rotate_2(self.motor_right, self.motor_left, 90)
+            time.sleep(1)
+        GPIO.cleanup()
+
+    def test_constant(self):
+        self.motor_left.test()
         GPIO.cleanup()
 
 if __name__ == '__main__':
-    Solver("2L 2L 2L").solve()
+    # Solver("2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F").solve()
+    #Solver("2L 2L").test_constant()
+    Solver("2L 2L").test_double()

@@ -29,14 +29,34 @@ class Stepper:
             print("step {}".format(i))
         sleep(0.1)
 
+    def test(self):
+        GPIO.output(self.dir_pin, 1) # set direction for motor to turn, 1 = CW
+
+        i = 0
+        while True:
+            GPIO.output(self.step_pin, 1)
+            sleep(0.001)
+            GPIO.output(self.step_pin, 0)
+            sleep(0.001)
+            i += 1
+            print("step {}".format(i))
+        sleep(0.1)
+
+
 class Motor(Stepper):
     def new_func(self):
         return
 
 class Linear(Stepper):
     """Create Linear Object"""
-    def __init__():
-        self.position = 1  # should start on cube
+    def __init__(self, step_pin, dir_pin):
+        GPIO.setmode(GPIO.BOARD)  # choose BCM or BOARD
+        GPIO.setup(dir_pin, GPIO.OUT)
+        GPIO.setup(step_pin, GPIO.OUT)
+
+        self.step_pin = step_pin
+        self.dir_pin = dir_pin
+        self.position = 1
 
     """Add Move Function"""
     def move(self, position_new):
