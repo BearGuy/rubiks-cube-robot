@@ -1,14 +1,12 @@
 import sys
 import kociemba
-import argparse
 
 from combiner import combine
 from video import webcam
-from normalizer import normalize
 
 class Qbr:
 
-    def __init__(self, humanize):
+    def __init__(self):
         return
 
     def run(self):
