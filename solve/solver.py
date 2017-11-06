@@ -19,23 +19,6 @@ class Solver:
         # self.linear_front = Linear(3, 5)
         # self.linear_back = Linear(8, 10)
 
-    def rotate(self, motor, degrees):
-        if degrees >= 0:
-            direct = 1
-        else:
-            direct = 0
-        GPIO.output(motor.dir_pin, direct) # set direction for motor to turn, 1 = CW
-
-        steps = int(abs(degrees)/1.8)
-
-        for i in range(steps):
-            GPIO.output(motor.step_pin, 1)
-            time.sleep(0.001)
-            GPIO.output(motor.step_pin, 0)
-            time.sleep(0.001)
-            print("step {}".format(i))
-        time.sleep(0.1)
-
     def rotate_2(self, motor_1, motor_2, degrees):
         if degrees >= 0:
             direct = 1
