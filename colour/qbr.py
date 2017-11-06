@@ -9,7 +9,7 @@ from normalizer import normalize
 class Qbr:
 
     def __init__(self, humanize):
-        self.humanize = humanize
+        return
 
     def run(self):
         state         = webcam.scan()
@@ -31,20 +31,8 @@ class Qbr:
         print('-- SOLUTION --')
         print('Starting position:\n    front: green\n    top: white\n')
         print(algorithm, '({0} moves)'.format(length), '\n')
-
-        if self.humanize:
-            manual = normalize.algorithm(algorithm)
-            for index, text in enumerate(manual):
-                print('{}. {}'.format(index+1, text))
         sys.exit(0)
 
 if __name__ == '__main__':
-    # define argument parser.
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-n', '--humanize', default=False, action='store_true',
-            help='Shows the solution humanized. For example "R2" would be: \
-                    "Turn the right side 180 degrees".')
-    args = parser.parse_args()
-
-    # run Qbr with its arguments.
-    Qbr(args.humanize).run()
+    # run Qbr
+    Qbr().run()
