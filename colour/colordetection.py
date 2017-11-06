@@ -1,6 +1,6 @@
 import sys
 
-class ColorDetection:
+class ColourDetection:
 
     def get_color_name(self, hsv):
         """ Get the name of the color based on the hue.
@@ -18,11 +18,11 @@ class ColorDetection:
         # blue = 120
 
         # h values (in lab)
-        # red =
-        # orange =
-        # yellow =
-        # green =
-        # blue =
+        # red = 0,1,2
+        # orange = 3,4,5
+        # yellow = 35
+        # green = 70
+        # blue = 100
 
         if s < 80:
             return 'white'
@@ -85,5 +85,3 @@ class ColorDetection:
         s /= num
         v /= num
         return (int(h), int(s), int(v))
-
-ColorDetector = ColorDetection()

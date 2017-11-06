@@ -1,14 +1,16 @@
 import sys
 import cv2
-from colordetection import ColorDetector
+from colordetection import ColourDetection
 
-class Webcam:
+
+class Video:
 
     def __init__(self):
         self.cam              = cv2.VideoCapture(0)
         self.stickers         = self.get_sticker_coordinates('main')
         self.current_stickers = self.get_sticker_coordinates('current')
         self.preview_stickers = self.get_sticker_coordinates('preview')
+        self.colour = ColourDetection()
 
     def get_sticker_coordinates(self, name):
         """
@@ -47,12 +49,12 @@ class Webcam:
     def draw_current_stickers(self, frame, state):
         """Draws the 9 current stickers in the frame."""
         for index,(x,y) in enumerate(self.current_stickers):
-            cv2.rectangle(frame, (x,y), (x+32, y+32), ColorDetector.name_to_rgb(state[index]), -1)
+            cv2.rectangle(frame, (x,y), (x+32, y+32), self.colour.name_to_rgb(state[index]), -1)
 
     def draw_preview_stickers(self, frame, state):
         """Draws the 9 preview stickers in the frame."""
         for index,(x,y) in enumerate(self.preview_stickers):
-            cv2.rectangle(frame, (x,y), (x+32, y+32), ColorDetector.name_to_rgb(state[index]), -1)
+            cv2.rectangle(frame, (x,y), (x+32, y+32), self.colour.name_to_rgb(state[index]), -1)
 
     def color_to_notation(self, color):
         """
@@ -105,8 +107,8 @@ class Webcam:
 
             for index,(x,y) in enumerate(self.stickers):
                 roi          = hsv[y:y+32, x:x+32]
-                avg_hsv      = ColorDetector.average_hsv(roi)
-                color_name   = ColorDetector.get_color_name(avg_hsv)
+                avg_hsv      = self.colour.average_hsv(roi)
+                color_name   = self.colour.get_color_name(avg_hsv)
                 state[index] = color_name
 
             # update when space bar is pressed.
@@ -133,6 +135,7 @@ class Webcam:
 
         self.cam.release()
         cv2.destroyAllWindows()
-        return sides if len(sides) == 6 else False
-
-webcam = Webcam()
+        if len(sides) == 6:
+            return sides
+        else:
+            return False

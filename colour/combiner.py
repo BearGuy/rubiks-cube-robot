@@ -10,5 +10,3 @@ class Combine:
         for face in 'URFDLB':
             combined += ''.join(sides[face])
         return combined
-
-combine = Combine()
