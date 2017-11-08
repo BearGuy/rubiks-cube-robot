@@ -8,7 +8,7 @@ class ColourDetection:
         :returns: string
         """
         (h,s,v) = hsv
-        print((h,s,v))
+        #print((h,s,v))
 
         # h values (theoretical)
         # red = 0

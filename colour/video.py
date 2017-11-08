@@ -1,7 +1,7 @@
 import sys
 import cv2
 from colordetection import ColourDetection
-
+import time
 
 class Video:
 
@@ -18,7 +18,7 @@ class Video:
         Grouped per 3 since on the cam will be
         3 rows of 3 stickers.
 
-        :param name: the requested color type
+        :param name: the requested sticker type
         :returns: list
         """
         stickers = {
@@ -92,12 +92,9 @@ class Video:
         postview = ['white','white','white',
                    'white','white','white',
                    'white','white','white']
-        # state   = [0,0,0,
-        #            0,0,0,
-        #            0,0,0]
         state = ['white','white','white',
-                   'white','white','white',
-                   'white','white','white']
+                 'white','white','white',
+                 'white','white','white']
 
         while True:
             _, frame = self.cam.read()
@@ -157,49 +154,53 @@ class Video:
         """
 
         sides   = {}
-        postview = ['white','white','white',
+        state = ['white','white','white',
                    'white','white','white',
                    'white','white','white']
-        state   = [0,0,0,
-                   0,0,0,
-                   0,0,0]
+        state_saved = ['white','white','white',
+                       'white','white','white',
+                       'white','white','white']
+
         while True:
             _, frame = self.cam.read()
+            key = cv2.waitKey(10) & 0xff
             #frame = cv2.flip(frame,0)
             hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-            #key = cv2.waitKey(10) & 0xff
+            ready = False
 
             # init certain stickers.
             self.draw_main_stickers(frame)
-            self.draw_postview_stickers(frame, postview)
 
             for index,(x,y) in enumerate(self.stickers):
-                roi          = hsv[y:y+32, x:x+32]
-                avg_hsv      = self.colour.average_hsv(roi)
+                sticker      = hsv[y:y+32, x:x+32]
+                avg_hsv      = self.colour.average_hsv(sticker)
                 color_name   = self.colour.get_color_name(avg_hsv)
                 state[index] = color_name
 
+            timer = time.time()
+            if int(timer) % 1 == 0 and int(timer) % 2 != 0:
+                state_saved = state
+            if int(timer) % 2 == 0:
+                if state == state_saved:
+                    ready = True
+                else:
+                    ready = False
+            for color in state:
+                if color == 'black' or color == 'purple':
+                    ready = False
+
             # update when space bar is pressed.
-            if condition:  # need to determine when to save cube face
-                postview = list(state)
-                self.draw_postview_stickers(frame, state)
+            if ready:  # need to determine when to save cube face
                 face = self.color_to_notation(state[4])  # get center colour
                 notation = [self.color_to_notation(color) for color in state]
                 sides[face] = notation
-
-            # show the new stickers
-            #self.draw_current_stickers(frame, state)
-
-            # append amount of scanned sides
-            #text = 'scanned sides: {}/6'.format(len(sides))
-            #cv2.putText(frame, text, (20, 460), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (255,255,255), 1, cv2.LINE_AA)
-
-            # quit on escape.
-            # if key == 27:
-                # break
+                print(sides[face])
 
             # show result
-            # cv2.imshow("default", frame)
+            cv2.imshow("default", frame)
+
+            if len(sides) == 6:
+                break
 
         self.cam.release()
         #cv2.destroyAllWindows()
