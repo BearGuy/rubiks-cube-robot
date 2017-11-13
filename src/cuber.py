@@ -10,7 +10,7 @@ class Qbr:
         return
 
     def run(self):
-        sides = Video().find_state()
+        sides = Video().scan()
         if not sides:
             print('[QBR SCAN ERROR] You did not scan in all 6 sides.')
             print('Please try again.')

@@ -13,7 +13,7 @@ from controller import Control
 class Solver:
     def __init__(self,algorithm):
         self.algorithm = algorithm.split() # get list of solve commands from string 
-        self.algorithm = self.state()
+        #self.algorithm = self.state()
 
     def state(self):
         sides = Video().find_state()
@@ -92,16 +92,16 @@ class Solver:
         for i in range(200):
             self.rotate_2(self.motor_right, self.motor_left, 90)
             time.sleep(1)
-        GPIO.cleanup()
 
-    def test_constant(self):
+    def demo(self):
         control = Control()
-        control.test(control.motor_left)
-        GPIO.cleanup()
+        control.rotate(control.linear_left, 90)
+        control.rotate(control.motor_left, 360)
+        control.rotate(control.linear_left, -90)
 
 if __name__ == '__main__':
     #Solver("2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F").solve()
-    Solver('').test_constant()
+    Solver('').demo()
     #Solver("2L 2L").test_constant()
     #Solver("2L 2L").test_double()
     GPIO.cleanup()

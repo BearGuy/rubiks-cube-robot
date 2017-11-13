@@ -159,10 +159,11 @@ class Video:
                 color_name   = self.colour.get_color_name(avg_hsv)
                 state[index] = color_name
 
+            # need to fix this timing code
             timer = time.time()
             if int(timer) % 1 == 0 and int(timer) % 2 != 0:
                 state_saved = state
-            if int(timer) % 2 == 0:
+            if int(timer) % 5 == 0:
                 if state == state_saved:
                     ready = True
             for color in state:

@@ -6,32 +6,32 @@ from motor import Linear
 class Control:
     def __init__(self):
         self.motor_left = Motor(3, 5)
-        self.motor_right = Motor(8, 10)
-        self.motor_front = Motor(11, 12)
-        self.motor_back = Motor(15, 16)
+        #self.motor_right = Motor(8, 10)
+        #self.motor_front = Motor(11, 12)
+        #self.motor_back = Motor(15, 16)
 
-        self.linear_right = Linear(21, 23)
-        self.linear_left = Linear(22, 24)
-        self.linear_front = Linear(29, 31)
-        self.linear_back = Linear(35, 36)
+        self.linear_left = Linear(21, 23)
+        #self.linear_right = Linear(22, 24)
+        #self.linear_front = Linear(29, 31)
+        #self.linear_back = Linear(35, 36)
 
     """Rotates the stepper motor given the degrees inputted"""
-    #def rotate(self, degrees):
-    #    if degrees >= 0:
-    #        direct = 1
-    #    else:
-    #        direct = 0
-    #    GPIO.output(self.dir_pin, direct) # set direction for motor to turn, 1 = CW
+    def rotate(self, motor, degrees):
+        if degrees >= 0:
+            direct = 1
+        else:
+            direct = 0
+        GPIO.output(motor.dir_pin, direct) # set direction for motor to turn, 1 = CW
 
-    #    steps = int(abs(degrees)/1.8)
+        steps = int(abs(degrees)/1.8)
 
-    #    for i in range(steps):
-    #        GPIO.output(self.step_pin, 1)
-    #        sleep(0.001)
-    #        GPIO.output(self.step_pin, 0)
-    #        sleep(0.001)
-    #        print("step {}".format(i))
-    #    sleep(0.1)
+        for i in range(steps):
+            GPIO.output(motor.step_pin, 1)
+            time.sleep(0.01)
+            GPIO.output(motor.step_pin, 0)
+            time.sleep(0.01)
+            #print("step {}".format(i))
+        time.sleep(0.1)
 
     def rotate_2(self, motor_1, motor_2, degrees):
         if degrees >= 0:
@@ -57,11 +57,11 @@ class Control:
         GPIO.output(motor.dir_pin, 1) # set direction for motor to turn, 1 = CW
 
         i = 0
-        while i < 20:
+        while i < 5:
             GPIO.output(motor.step_pin, 1)
-            time.sleep(0.1)
+            time.sleep(0.001)
             GPIO.output(motor.step_pin, 0)
-            time.sleep(0.1)
+            time.sleep(0.001)
             i += 1
             print("step {}".format(i))
         time.sleep(0.1)
