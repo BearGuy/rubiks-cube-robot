@@ -135,12 +135,8 @@ class Video:
         :returns: dictionary
         """
 
-        state = ['white','white','white',
-                 'white','white','white',
-                 'white','white','white']
-        state_saved = ['white','white','white',
-                       'white','white','white',
-                       'white','white','white']
+        state = []*9
+        state_saved = []*9
 
         while True:
             _, frame = self.cam.read()
@@ -161,9 +157,9 @@ class Video:
 
             # need to fix this timing code
             timer = time.time()
-            if int(timer) % 1 == 0 and int(timer) % 2 != 0:
+            if int(timer) % 5 == 0 and int(timer) % 10 != 0:
                 state_saved = state
-            if int(timer) % 5 == 0:
+            if int(timer) % 10 == 0:
                 if state == state_saved:
                     ready = True
             for color in state:
@@ -173,7 +169,7 @@ class Video:
             # show result
             cv2.imshow("default", frame)
 
-            # update when space bar is pressed.
+            # save face
             if ready:  # need to determine when to save cube face
                 #face = self.colour.color_to_notation(state[4])  # get center colour
                 notation = [self.colour.color_to_notation(color) for color in state]

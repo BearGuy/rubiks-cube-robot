@@ -83,7 +83,7 @@ class Solver:
             elif command == "D'":
                 control.run_pD()
 
-            time.sleep(2)
+            time.sleep(1)
 
         GPIO.cleanup() # resets all GPIO ports used by this program
         sys.exit(0)
@@ -100,8 +100,7 @@ class Solver:
         control.rotate(control.linear_left, -90)
 
 if __name__ == '__main__':
-    #Solver("2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F 2F").solve()
-    Solver('').demo()
-    #Solver("2L 2L").test_constant()
+    Solver("L").solve()
+    #Solver('').demo()
     #Solver("2L 2L").test_double()
     GPIO.cleanup()
