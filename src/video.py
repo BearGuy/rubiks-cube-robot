@@ -135,19 +135,18 @@ class Video:
         :returns: dictionary
         """
 
-        state = []*9
-        state_saved = []*9
+        state = ['']*9
+        state_saved = ['']*9
+        state_temp = ['']*9
+        stable = 1
+        ready = False
+        counter = 0
 
         while True:
             _, frame = self.cam.read()
             key = cv2.waitKey(10) & 0xff
             #frame = cv2.flip(frame,0)
             hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-            ready = False
-
-            # init certain stickers.
-            self.draw_main_stickers(frame)
-            self.draw_postview_stickers(frame, state)
 
             for index,(x,y) in enumerate(self.stickers):
                 sticker      = hsv[y:y+32, x:x+32]
@@ -155,16 +154,25 @@ class Video:
                 color_name   = self.colour.get_color_name(avg_hsv)
                 state[index] = color_name
 
+            # init certain stickers.
+            self.draw_main_stickers(frame)
+            self.draw_postview_stickers(frame, state)
+
             # need to fix this timing code
-            timer = time.time()
-            if int(timer) % 5 == 0 and int(timer) % 10 != 0:
-                state_saved = state
-            if int(timer) % 10 == 0:
-                if state == state_saved:
+            state_temp = state
+            print(state_saved)
+            print(state_temp)
+            if state_temp != state_saved:
+                stable = 0
+            state_saved = state_temp
+            print(stable)
+            if counter % 100 == 0:
+                print('check match')
+                if state == state_saved and stable == 1:
                     ready = True
-            for color in state:
-                if color == 'black' or color == 'purple':
-                    ready = False
+                stable = 1
+            if 'black' in state or 'purple' in state:
+                ready = False
 
             # show result
             cv2.imshow("default", frame)
@@ -173,7 +181,10 @@ class Video:
             if ready:  # need to determine when to save cube face
                 #face = self.colour.color_to_notation(state[4])  # get center colour
                 notation = [self.colour.color_to_notation(color) for color in state]
+                print(notation)
                 break
+
+            counter += 1
 
 
         #self.cam.release()
@@ -183,56 +194,39 @@ class Video:
     def find_state(self):
         
         sides = {}
-
         control = Control()
-        control.linear_front.move(0)
-        control.linear_back.move(0)
+
+        control.move_2(control.linear_front, control.linear_back, 0)
 
         notation_1 = self.scan_headless()
-        print(notation_1)
+
         control.rotate_2(control.motor_right, control.motor_left, 90)
         notation_2 = self.scan_headless()
-        print(notation_2)
+
         control.rotate_2(control.motor_right, control.motor_left, 90)
         notation_3 = self.scan_headless()
-        print(notation_3)
+
         control.rotate_2(control.motor_right, control.motor_left, 90)
         notation_4 = self.scan_headless()
-        print(notation_4)
 
-        control.linear_front.move(1)
-        control.linear_back.move(1)
-
-        control.linear_right.move(0)
-        control.linear_left.move(0)
+        control.move_2(control.linear_front, control.linear_back, 1)
+        control.move_2(control.linear_right, control.linear_left, 0)
         control.rotate_2(control.motor_right, control.motor_left, 90)
-
         control.rotate_2(control.motor_back, control.motor_front, 90)
         notation_5 = self.scan_headless()
-        print(notation_5)
 
         control.rotate_2(control.motor_back, control.motor_front, 180)
         notation_6 = self.scan_headless()
-        print(notation_6)
 
         control.rotate_2(control.motor_back, control.motor_front, 90)
-
-        control.linear_right.move(1)
-        control.linear_left.move(1)
-
-        control.linear_front.move(0)
-        control.linear_back.move(0)
-
+        control.move_2(control.linear_right, control.linear_left, 1)
+        control.move_2(control.linear_front, control.linear_back, 0)
         control.rotate_2(control.motor_right, control.motor_left, 90)
 
-        control.linear_front.move(1)
-        control.linear_back.move(1)
-
-        control.linear_right.move(0)
-        control.linear_left.move(0)
+        control.move_2(control.linear_front, control.linear_back, 1)
+        control.move_2(control.linear_right, control.linear_left, 0)
         control.rotate_2(control.motor_right, control.motor_left, 90)
-        control.linear_right.move(1)
-        control.linear_left.move(1)
+        control.move_2(control.linear_right, control.linear_left, 1)
 
         sides[notation_1[4]] = notation_1
         sides[notation_2[4]] = notation_2
