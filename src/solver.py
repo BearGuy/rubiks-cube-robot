@@ -88,19 +88,12 @@ class Solver:
         GPIO.cleanup() # resets all GPIO ports used by this program
         sys.exit(0)
 
-    def test_double(self):
-        for i in range(200):
-            self.rotate_2(self.motor_right, self.motor_left, 90)
-            time.sleep(1)
-
-    def demo(self):
+    def test(self):
         control = Control()
         control.rotate(control.linear_left, 90)
         control.rotate(control.motor_left, 360)
         control.rotate(control.linear_left, -90)
 
 if __name__ == '__main__':
-    Solver("L").solve()
-    #Solver('').demo()
-    #Solver("2L 2L").test_double()
+    Solver("B").solve()
     GPIO.cleanup()
