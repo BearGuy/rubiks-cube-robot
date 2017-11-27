@@ -158,21 +158,18 @@ class Video:
             self.draw_main_stickers(frame)
             self.draw_postview_stickers(frame, state)
 
-            # need to fix this timing code
-            state_temp = state
-            print(state_saved)
-            print(state_temp)
-            if state_temp != state_saved:
+            # autonomous scanning
+            if state != state_saved:
                 stable = 0
-            state_saved = state_temp
-            print(stable)
-            if counter % 100 == 0:
+            state_saved[:] = state
+            if counter % 20 == 0:
                 print('check match')
-                if state == state_saved and stable == 1:
+                if stable == 1 and 'black' not in state and 'purple' not in state:
                     ready = True
+                    print('match')
+                else:
+                    print('no match')
                 stable = 1
-            if 'black' in state or 'purple' in state:
-                ready = False
 
             # show result
             cv2.imshow("default", frame)
