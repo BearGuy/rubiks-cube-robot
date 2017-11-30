@@ -65,7 +65,6 @@ class Solver:
                 control.run_B()
             elif command == '2B':
                 control.run_2B()
-
             elif command == "B'":
                 control.run_pB()
 
@@ -95,5 +94,5 @@ class Solver:
         control.rotate(control.linear_left, -90)
 
 if __name__ == '__main__':
-    Solver("B").solve()
+    Solver("B F R L").solve()
     GPIO.cleanup()

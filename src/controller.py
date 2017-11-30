@@ -5,24 +5,24 @@ from motor import Linear
 
 class Control:
     def __init__(self):
-        self.motor_left = Motor(3, 5)
-        self.motor_right = Motor(8, 10)
+        self.motor_right = Motor(3, 5)
+        self.motor_left  = Motor(8, 10)
         self.motor_front = Motor(11, 12)
-        self.motor_back = Motor(15, 16)
+        self.motor_back  = Motor(15, 16)
 
-        self.linear_left = Linear(21, 23)
-        self.linear_right = Linear(22, 24)
-        self.linear_front = Linear(29, 31)
-        self.linear_back = Linear(35, 36)
+        self.linear_right = Linear(21, 23, 1)
+        self.linear_left  = Linear(22, 24, 1)
+        self.linear_front = Linear(35, 36, 1)
+        self.linear_back  = Linear(29, 31, 1)
 
     """Rotates the stepper motor by the degrees inputted"""
     def rotate(self, motor, degrees):
         if degrees >= 0:
-            direct = 1
-        else:
             direct = 0
-        GPIO.output(motor.dir_pin, direct) # set direction for motor to turn, 1 = CW
-
+        else:
+            direct = 1
+        # set direction for motor to turn, 0 = CCW for motor, CW for cube
+        GPIO.output(motor.dir_pin, direct)
         steps = int(abs(degrees)/1.8)
 
         for i in range(steps):
@@ -36,11 +36,33 @@ class Control:
     """Rotates the 2 stepper motors simultaneously by the degrees inputted"""
     def rotate_2(self, motor_1, motor_2, degrees):
         if degrees >= 0:
-            direct = 1
-        else:
             direct = 0
-        GPIO.output(motor_1.dir_pin, direct) # set direction for motor to turn, 1 = CW
-        GPIO.output(motor_2.dir_pin, direct^1) # set direction for motor to turn, 1 = CW
+        else:
+            direct = 1
+        # set direction for motor to turn, 0 = CCW for motor, CW for cube
+        GPIO.output(motor_1.dir_pin, direct)
+        GPIO.output(motor_2.dir_pin, direct^1)
+
+        steps = int(abs(degrees)/1.8)
+
+        for i in range(steps):
+            GPIO.output(motor_1.step_pin, 1)
+            GPIO.output(motor_2.step_pin, 1)
+            time.sleep(0.01)
+            GPIO.output(motor_1.step_pin, 0)
+            GPIO.output(motor_2.step_pin, 0)
+            time.sleep(0.01)
+            #print("step {}".format(i))
+        time.sleep(0.5)
+
+    def move_2_rotate(self, motor_1, motor_2, degrees):
+        if degrees >= 0:
+            direct = 0
+        else:
+            direct = 1
+        # set direction for motor to turn, 0 = CCW for motor, CW for cube
+        GPIO.output(motor_1.dir_pin, direct)
+        GPIO.output(motor_2.dir_pin, direct)
 
         steps = int(abs(degrees)/1.8)
 
@@ -63,12 +85,12 @@ class Control:
             motor.position = 1
 
     def move_2(self, motor_1, motor_2, position_new):
-        if motor_2.position == 1 and motor_2.position == 1 and position_new == 0:
-            self.rotate_2(motor_1, motor_2, 90)
+        if motor_1.position == 1 and motor_2.position == 1 and position_new == 0:
+            self.move_2_rotate(motor_1, motor_2, 90)
             motor_1.position = 0
             motor_2.position = 0
         if motor_1.position == 0 and motor_2.position == 0 and position_new == 1:
-            self.rotate_2(motor_1, motor_2, -90)
+            self.move_2_rotate(motor_1, motor_2, -90)
             motor_1.position = 1
             motor_2.position = 1
 

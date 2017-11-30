@@ -36,14 +36,14 @@ class Motor(Stepper):
 
 class Linear(Stepper):
     """Create Linear Object"""
-    def __init__(self, step_pin, dir_pin):
+    def __init__(self, step_pin, dir_pin, position):
         GPIO.setmode(GPIO.BOARD)  # choose BCM or BOARD
         GPIO.setup(dir_pin, GPIO.OUT)
         GPIO.setup(step_pin, GPIO.OUT)
 
         self.step_pin = step_pin
         self.dir_pin = dir_pin
-        self.position = 1
+        self.position = position 
 
     #"""Add Move Function"""
     #def move(self, position_new):
