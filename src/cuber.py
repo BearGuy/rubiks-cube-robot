@@ -12,8 +12,7 @@ class Qbr:
     def run(self):
         sides = Video().scan()
         if not sides:
-            print('[QBR SCAN ERROR] You did not scan in all 6 sides.')
-            print('Please try again.')
+            print('You did not scan all 6 sides.')
             sys.exit(1)
 
         unsolved_state = Combine().sides(sides)
@@ -22,8 +21,7 @@ class Qbr:
             algorithm = kociemba.solve(unsolved_state)
             length    = len(algorithm.split())
         except Exception as err:
-            print('[QBR SOLVE ERROR] You did not scan in all 6 sides correctly.')
-            print('Please try again.')
+            print('You did not scan all 6 sides correctly.')
             sys.exit(1)
 
         print('-- SOLUTION --')
@@ -32,5 +30,4 @@ class Qbr:
         return algorithm
 
 if __name__ == '__main__':
-    # run Qbr
     Qbr().run()
