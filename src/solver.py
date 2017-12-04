@@ -18,8 +18,7 @@ class Solver:
     def state(self):
         sides = Video().find_state()
         if not sides:
-            print('[QBR SCAN ERROR] You did not scan in all 6 sides.')
-            print('Please try again.')
+            print('You did not scan all 6 sides.')
             sys.exit(1)
 
         unsolved_state = Combine().sides(sides)
@@ -28,8 +27,7 @@ class Solver:
             algorithm = kociemba.solve(unsolved_state)
             length    = len(algorithm.split())
         except Exception as err:
-            print('[QBR SOLVE ERROR] You did not scan in all 6 sides correctly.')
-            print('Please try again.')
+            print('You did not scan all 6 sides correctly.')
             sys.exit(1)
 
         print('-- SOLUTION --')
@@ -84,14 +82,7 @@ class Solver:
 
             time.sleep(1)
 
-        GPIO.cleanup() # resets all GPIO ports used by this program
         sys.exit(0)
-
-    def test(self):
-        control = Control()
-        control.rotate(control.linear_left, 90)
-        control.rotate(control.motor_left, 360)
-        control.rotate(control.linear_left, -90)
 
 if __name__ == '__main__':
     Solver("B F R L").solve()
