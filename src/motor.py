@@ -11,26 +11,8 @@ class Stepper:
         self.step_pin = step_pin
         self.dir_pin = dir_pin
 
-    #"""Rotates the stepper motor given the degrees inputted"""
-    #def rotate(self, degrees):
-    #    if degrees >= 0:
-    #        direct = 1
-    #    else:
-    #        direct = 0
-    #    GPIO.output(self.dir_pin, direct) # set direction for motor to turn, 1 = CW
-
-    #    steps = int(abs(degrees)/1.8)
-
-    #    for i in range(steps):
-    #        GPIO.output(self.step_pin, 1)
-    #        sleep(0.001)
-    #        GPIO.output(self.step_pin, 0)
-    #        sleep(0.001)
-    #        #print("step {}".format(i))
-    #    sleep(0.5)
-
-
 class Motor(Stepper):
+    """Create Motor Object"""
     def new_func(self):
         return
 
@@ -44,13 +26,3 @@ class Linear(Stepper):
         self.step_pin = step_pin
         self.dir_pin = dir_pin
         self.position = position 
-
-    #"""Add Move Function"""
-    #def move(self, position_new):
-    #    if self.position == 1 and position_new == 0:
-    #        self.rotate(90)
-    #        self.position = 0
-    #    if self.position == 0 and position_new == 1:
-    #        self.rotate(-90)
-    #        self.position = 1
-
