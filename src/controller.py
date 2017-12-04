@@ -30,7 +30,6 @@ class Control:
             time.sleep(0.01)
             GPIO.output(motor.step_pin, 0)
             time.sleep(0.01)
-            #print("step {}".format(i))
         time.sleep(0.5)
 
     """Rotates the 2 stepper motors simultaneously by the degrees inputted"""
@@ -52,7 +51,6 @@ class Control:
             GPIO.output(motor_1.step_pin, 0)
             GPIO.output(motor_2.step_pin, 0)
             time.sleep(0.01)
-            #print("step {}".format(i))
         time.sleep(0.5)
 
     def move_2_rotate(self, motor_1, motor_2, degrees):
@@ -73,7 +71,6 @@ class Control:
             GPIO.output(motor_1.step_pin, 0)
             GPIO.output(motor_2.step_pin, 0)
             time.sleep(0.01)
-            #print("step {}".format(i))
         time.sleep(0.5)
 
     def move(self, motor, position_new):
