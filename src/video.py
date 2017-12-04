@@ -128,11 +128,7 @@ class Video:
         Open up the webcam and scans the 9 regions in the center
         and show a postview in the left upper corner.
 
-        After hitting the space bar to confirm, the block below the
-        current stickers shows the current state that you have.
-        This is show every user can see what the computer toke as input.
-
-        :returns: dictionary
+        :returns: list
         """
 
         state = ['']*9
